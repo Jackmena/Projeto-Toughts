@@ -8,8 +8,11 @@ const app = express()
 
 const conn = require('./db/conn')
 
+// Routes
 const toughtsRoutes = require('./routes/toughtsRoutes')
+const authRoutes = require('./routes/authRoutes')
 
+// Controller
 const ToughtController = require('./controllers/ToughtController')
 
 // Models
@@ -64,6 +67,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/toughts', toughtsRoutes)
+app.use('/', authRoutes)
 
 app.get('/', ToughtController.showToughts)
 
