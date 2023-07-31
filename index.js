@@ -8,6 +8,10 @@ const app = express()
 
 const conn = require('./db/conn')
 
+const toughtsRoutes = require('./routes/toughtsRoutes')
+
+const ToughtController = require('./controllers/ToughtController')
+
 // Models
 const Tought = require('./models/Toughts')
 const User = require('./models/User')
@@ -57,6 +61,11 @@ app.use((req, res, next) => {
 
     next()
 })
+
+// Routes
+app.use('/toughts', toughtsRoutes)
+
+app.get('/', ToughtController.showToughts)
 
 conn.sync().then(() => {
     app.listen(3000)
