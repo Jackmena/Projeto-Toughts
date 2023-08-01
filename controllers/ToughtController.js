@@ -11,7 +11,21 @@ module.exports = class ToughtController {
             search = req.query.search
         }
 
-        const toughtData = await Tought.findAll({ include: User, where: { title: { [Op.like]: `%${search}%` }, } })
+        let order = 'DESC'
+
+        if (req.query.order === 'old') {
+            order = 'ASC'
+        } else {
+            order = 'DESC'
+        }
+
+        const toughtData = await Tought.findAll({
+            include: User,
+            where: {
+                title: { [Op.like]: `%${search}%` },
+            },
+            order: [['createdAt', order]],
+        })
 
         const toughts = toughtData.map((result) => result.get({ plain: true }))
 
